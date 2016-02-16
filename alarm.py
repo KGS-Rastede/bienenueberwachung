@@ -21,7 +21,7 @@ empfaenger = 'steffenistcool@gmail.com'
 	#Emailformatierung: Betreff, header und body der Mail (bisher nur Platzhalter)
 subject = 'Bienenstockalarm'
 header = 'To: ' + empfaenger + '\n' + 'From: ' + User + '\n' +'Subject: ' + subject
-body = 'Anscheinend ist etwas los, beim Bienenstock. Better call The Doctor'
+body = 'Anscheinend ist etwas los, beim Bienenstock.'
 
 	#Handshake mit dem Googlemail-Server
 server.ehlo()
