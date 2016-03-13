@@ -1,4 +1,4 @@
-#----------------Importierung nuetzlicher Variablen und Libaries--------------
+#----------------Importierung nuetzlicher Variablen und Libraries--------------
 #!/usr/bin/python
 import os
 import RPi.GPIO as GPIO

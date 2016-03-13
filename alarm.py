@@ -2,7 +2,7 @@
 #Todo: GPIO-Pins,	Stromkreis unterbrochen = Benachrichtigung
 #			Stromkreis wiederhergestellt = Timer unterbrochen
 
-#Importierung der Simple Mail Transfer Protocol (SMTP), CSV Libaries und Time/Sleep Funktion
+#Importierung der Simple Mail Transfer Protocol (SMTP), CSV Libraries und Time/Sleep Funktion
 #!/usr/bin/python
 from time import sleep
 import smtplib
@@ -16,17 +16,17 @@ GPIO.setwarnings(False)
 GPIO.setup(18, GPIO.IN)
 #--------------------------Deklarierung einiger nuetzlicherVariablen-------------------------
 	#Einbindung der Login-CSV-Datei, Pfad kann geaendert werden
-with open('/home/bienenpi/login.csv') as csvfile:
+with open('/home/bienenpi/daten.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
 	for row in readCSV:
 		User = row[0]
 		Pass = row[1]
-
+	#Die Variable 'empfaenger' ist das Ziel der Benachrichtigungsmail
+		empfaenger = row[2]
 	#Variable zur Abkuerzung von 'smtplib.SMTP('smtp.gmail.com',587)' zu 'server'
 server = smtplib.SMTP('smtp.gmail.com',587)
 
-	#Die Variable 'empfaenger' ist das Ziel der Benachrichtigungsmail
-empfaenger = 'steffenistcool@gmail.com'
+
 
 #--------------------------------------------------------------------------------------------
 
