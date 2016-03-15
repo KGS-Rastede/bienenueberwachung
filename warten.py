@@ -25,7 +25,7 @@ while True:
 		print GPIO.input(18)
 		#warte 5 Sekunden
 		time.sleep(5)
-		#starte Skript zum Senden von Mail
+		#starte Skript zum Senden der Benachrichtigung 
 		status = subprocess.call("python" + " /home/bienenpi/alarm.py", shell=True)
 
 #-----------------------------------------------------------------------------

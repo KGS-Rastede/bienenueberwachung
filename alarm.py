@@ -1,7 +1,3 @@
-#Letzte Aenderungen: Login-Daten in CSV-Datei und Timerfunktion
-#Todo: GPIO-Pins,	Stromkreis unterbrochen = Benachrichtigung
-#			Stromkreis wiederhergestellt = Timer unterbrochen
-
 #Importierung der Simple Mail Transfer Protocol (SMTP), CSV Libraries und Time/Sleep Funktion
 #!/usr/bin/python
 from time import sleep
@@ -10,23 +6,27 @@ import csv
 import RPi.GPIO as GPIO
 import subprocess
 
+#Waehlen des GPIO-Pin Layouts (GPIO.BOARD oder GPIO.BCM)
 GPIO.setmode(GPIO.BOARD)
 
 GPIO.setwarnings(False)
+#definieren von GPIO-Pin 18 als Input-Pin
 GPIO.setup(18, GPIO.IN)
 #--------------------------Deklarierung einiger nuetzlicherVariablen-------------------------
-	#Einbindung der Login-CSV-Datei, Pfad kann geaendert werden
+	#Einbindung der daten-CSV-Datei, Pfad kann geaendert werden
 with open('/home/bienenpi/daten.csv') as csvfile:
 	readCSV = csv.reader(csvfile, delimiter=',')
-	for row in readCSV:
-		User = row[0]
-		Pass = row[1]
-	#Die Variable 'empfaenger' ist das Ziel der Benachrichtigungsmail
-		empfaenger = row[2]
+	for element in readCSV:
+		#definieren der Variablen 'User' und 'Pass' als Element 1 und 2 der daten-CSV-Datei
+		User = element[0]
+		Pass = element[1]
+		#Die Variable 'empfaenger' ist das Ziel der Benachrichtigungsmail
+		empfaenger = element[2]
+
 	#Variable zur Abkuerzung von 'smtplib.SMTP('smtp.gmail.com',587)' zu 'server'
 server = smtplib.SMTP('smtp.gmail.com',587)
 
-
+	
 
 #--------------------------------------------------------------------------------------------
 
@@ -50,16 +50,14 @@ for Timer in range(0,60):
 server.ehlo()
 	#Herstellung einer Verschluesselung zur sicheren Datenuebertragung
 server.starttls()
-
 	#Authentifizierung des Mailaccounts
 server.login(User, Pass)
 	#Senden der Mail
 server.sendmail(User, empfaenger, header + '\n\n'+ body)
-
-#beendet die Verbindung zum Googlemail-Server
+	#beendet die Verbindung zum Googlemail-Server
 server.quit()
 
-#startet das Warten-Skript, wenn Mail gesendet
+	#startet das Warten-Skript, wenn Mail gesendet
 status = subprocess.call("sudo python" + " /home/bienenpi/warten.py", shell=True)
 
 
